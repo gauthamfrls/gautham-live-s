@@ -1,17 +1,40 @@
 let customButtons = JSON.parse(localStorage.getItem("customButtons") || "[]");
 let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
-async function fetchCustomButtons() {
+let proxies = [];
+let games = [];
+let tools = [];
+let emulators = [];
+let apps = [];
+
+async function fetchData() {
   try {
     const response = await fetch('/api/getButtons');
     if (!response.ok) throw new Error('Network response was not ok');
-    const buttons = await response.json();
-    customButtons = buttons;
+    const data = await response.json();
+    proxies = data.proxies || [];
+    games = data.games || [];
+    tools = data.tools || [];
+    emulators = data.emulators || [];
+    apps = data.apps || [];
+    customButtons = data.customButtons || customButtons;
     localStorage.setItem("customButtons", JSON.stringify(customButtons));
+    loadLinks('proxyList', proxies);
+    loadLinks('gameList', games);
+    loadLinks('toolList', tools);
+    loadLinks('emulatorList', emulators);
+    loadLinks('appList', apps);
     loadLinks('customButtonList', customButtons, true);
+    renderFavorites();
   } catch (error) {
     console.error('Error fetching buttons:', error);
+    loadLinks('proxyList', proxies);
+    loadLinks('gameList', games);
+    loadLinks('toolList', tools);
+    loadLinks('emulatorList', emulators);
+    loadLinks('appList', apps);
     loadLinks('customButtonList', customButtons, true);
+    renderFavorites();
   }
 }
 
@@ -114,7 +137,7 @@ function shadeColor(color, percent) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  fetchCustomButtons();
+  fetchData();
 
   document.querySelectorAll(".tab").forEach(tab => {
     tab.addEventListener("click", () => {
@@ -191,12 +214,4 @@ document.addEventListener("DOMContentLoaded", () => {
     const darker = shadeColor(savedThemeColor, -20);
     document.documentElement.style.setProperty('--hover-color', darker);
   }
-
-  loadLinks("proxyList", proxies);
-  loadLinks("gameList", games);
-  loadLinks("toolList", tools);
-  loadLinks("emulatorList", emulators);
-  loadLinks("appList", apps);
-  loadLinks("customButtonList", customButtons, true);
-  renderFavorites();
 });

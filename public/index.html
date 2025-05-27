@@ -29,6 +29,7 @@
 
     <div id="proxies" class="content active">
       <h2>Proxies</h2>
+      <p id="updatesParagraph">Loading updates...</p>
       <div class="grid-container" id="proxyList"></div>
     </div>
     <div id="games" class="content">
@@ -98,4 +99,22 @@
       }
     }
   }
+
+  async function loadUpdate(id) {
+  try {
+    const response = await fetch(`/api/getUpdate?id=${encodeURIComponent(id)}`);
+    if (!response.ok) throw new Error('Failed to load update');
+    const data = await response.json();
+    document.getElementById('updateParagraph').innerHTML = data.content || 'No update content';
+  } catch (error) {
+    console.error(error);
+    document.getElementById('updateParagraph').innerHTML = 'Error loading update';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const updateId = 'your-update-id-here'; // set your update ID here
+  loadUpdate(updateId);
+});
+
 </script>
