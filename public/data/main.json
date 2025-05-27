@@ -1,0 +1,152 @@
+{
+  "proxies": [
+    {
+      "name": "Shuttle",
+      "url": "https://philosophy.k12biography.com/"
+    },
+    {
+      "name": "MonkeyGG2",
+      "url": "https://monkeygg2.github.io/"
+    },
+    {
+      "name": "Helios",
+      "url": "https://helios-browser.vercel.app/"
+    },
+    {
+      "name": "3kh0 Lite",
+      "url": "https://lite.3kh0.net/"
+    }
+  ],
+  "games": [
+    {
+      "name": "Rooftop Snipers 2",
+      "url": "https://blobby-boi.github.io/rooftop-snipers-2/"
+    },
+    {
+      "name": "Rooftop Snipers",
+      "url": "https://blobby-boi.github.io/rooftop-snipers/"
+    },
+    {
+      "name": "1v1.lol",
+      "url": "https://blobby-boi.github.io/1v1lol/"
+    },
+    {
+      "name": "Vex 8",
+      "url": "https://blobby-boi.github.io/vex8/"
+    },
+    {
+      "name": "Baldi",
+      "url": "https://blobby-boi.github.io/Baldi/"
+    },
+    {
+      "name": "Slope",
+      "url": "https://blobby-boi.github.io/Slope/"
+    },
+    {
+      "name": "Minecraft 1-8",
+      "url": "https://blobby-boi.github.io/minecraft-1-8/"
+    },
+    {
+      "name": "Subway Surfers",
+      "url": "https://blobby-boi.github.io/Subway-Surfers"
+    },
+    {
+      "name": "BitLife",
+      "url": "https://blobby-boi.github.io/BitLife/"
+    },
+    {
+      "name": "Run 3",
+      "url": "https://blobby-boi.github.io/Run-3/"
+    },
+    {
+      "name": "Idle Breakout",
+      "url": "https://blobby-boi.github.io/Idle-Breakout"
+    },
+    {
+      "name": "Retro Bowl",
+      "url": "https://blobby-boi.github.io/retro-bowl/"
+    },
+    {
+      "name": "GamePluto",
+      "url": "https://gamepluto.gitlab.io/"
+    },
+    {
+      "name": "UBG WTF",
+      "url": "https://ubgwtf.gitlab.io/"
+    },
+    {
+      "name": "UBG 365",
+      "url": "https://ubg365.gitlab.io/"
+    },
+    {
+      "name": "Unblocked Games 76X",
+      "url": "https://unblockedgames76x.gitlab.io/"
+    },
+    {
+      "name": "Classroom 6X",
+      "url": "https://classrom6x.gitlab.io/"
+    },
+    {
+      "name": "Classrooms 6X",
+      "url": "https://classrooms6x.gitlab.io/"
+    },
+    {
+      "name": "GitHub Games",
+      "url": "https://githubgames.gitlab.io/"
+    },
+    {
+      "name": "GitLab Games",
+      "url": "https://gitlabgames.gitlab.io/"
+    },
+    {
+      "name": "KBH Games",
+      "url": "https://kbhgame.gitlab.io/"
+    },
+    {
+      "name": "RB Unblocked",
+      "url": "https://rbunblocked.gitlab.io/"
+    },
+    {
+      "name": "UG76",
+      "url": "https://ug76.gitlab.io/"
+    },
+    {
+      "name": "Games Pluto",
+      "url": "https://gamespluto.gitlab.io/"
+    },
+    {
+      "name": "1v1.lol Game",
+      "url": "https://1v1lolgame.gitlab.io/"
+    },
+    {
+      "name": "Ovo Unblocked",
+      "url": "https://ovounblocked.gitlab.io/"
+    }
+  ],
+  "tools": [
+    {
+      "name": "ExtPrint",
+      "url": "https://extprint3r.github.io/"
+    },
+    {
+      "name": "Ublob",
+      "url": "https://blobby-boi.github.io/BlobeBM/"
+    }
+  ],
+  "emulators": [
+    {
+      "name": "EmulatorJS",
+      "url": "https://demo.emulatorjs.org/"
+    },
+    {
+      "name": "Rom List(For Emulator)",
+      "url": "https://www.romsgames.net/roms/"
+    }
+  ],
+  "apps": [
+    {
+      "name": "Nova(movies)",
+      "url": "https://novastream.top/"
+    }
+  ]
+}

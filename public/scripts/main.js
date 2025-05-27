@@ -1,43 +1,6 @@
 let customButtons = JSON.parse(localStorage.getItem("customButtons") || "[]");
 let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
-let proxies = [];
-let games = [];
-let tools = [];
-let emulators = [];
-let apps = [];
-
-async function fetchData() {
-  try {
-    const response = await fetch('/api/getButtons');
-    if (!response.ok) throw new Error('Network response was not ok');
-    const data = await response.json();
-    proxies = data.proxies || [];
-    games = data.games || [];
-    tools = data.tools || [];
-    emulators = data.emulators || [];
-    apps = data.apps || [];
-    customButtons = data.customButtons || customButtons;
-    localStorage.setItem("customButtons", JSON.stringify(customButtons));
-    loadLinks('proxyList', proxies);
-    loadLinks('gameList', games);
-    loadLinks('toolList', tools);
-    loadLinks('emulatorList', emulators);
-    loadLinks('appList', apps);
-    loadLinks('customButtonList', customButtons, true);
-    renderFavorites();
-  } catch (error) {
-    console.error('Error fetching buttons:', error);
-    loadLinks('proxyList', proxies);
-    loadLinks('gameList', games);
-    loadLinks('toolList', tools);
-    loadLinks('emulatorList', emulators);
-    loadLinks('appList', apps);
-    loadLinks('customButtonList', customButtons, true);
-    renderFavorites();
-  }
-}
-
 function openInIframe(url) {
   const newTab = window.open("", "_blank");
   if (!newTab) return;
@@ -70,7 +33,7 @@ function loadLinks(containerId, data, isCustom=false) {
 
     const copyBtn = document.createElement("button");
     copyBtn.className = "copy-btn";
-    copyBtn.textContent = "Copy";
+    copyBtn.textContent = "Copy Link";
     copyBtn.title = "Copy URL to clipboard";
     copyBtn.onclick = (e) => {
       e.stopPropagation();
@@ -120,6 +83,33 @@ function renderFavorites() {
   });
 }
 
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    const id = tab.dataset.tab;
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".content").forEach(c => c.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById(id).classList.add("active");
+  });
+});
+
+document.getElementById("updateTitleBtn").addEventListener("click", () => {
+  const newTitle = document.getElementById("newTitle").value.trim();
+  if (newTitle) {
+    document.title = newTitle;
+    document.getElementById("pageTitle").textContent = newTitle;
+    localStorage.setItem("pageTitle", newTitle);
+  }
+});
+
+const themeColorInput = document.getElementById("themeColor");
+themeColorInput.addEventListener("input", () => {
+  document.documentElement.style.setProperty('--primary-color', themeColorInput.value);
+  const darker = shadeColor(themeColorInput.value, -20);
+  document.documentElement.style.setProperty('--hover-color', darker);
+  localStorage.setItem("themeColor", themeColorInput.value);
+});
+
 function shadeColor(color, percent) {
   let R = parseInt(color.substring(1,3),16);
   let G = parseInt(color.substring(3,5),16);
@@ -136,82 +126,64 @@ function shadeColor(color, percent) {
   return "#"+RR+GG+BB;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  fetchData();
-
-  document.querySelectorAll(".tab").forEach(tab => {
-    tab.addEventListener("click", () => {
-      const id = tab.dataset.tab;
-      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-      document.querySelectorAll(".content").forEach(c => c.classList.remove("active"));
-      tab.classList.add("active");
-      document.getElementById(id).classList.add("active");
-    });
-  });
-
-  document.getElementById("updateTitleBtn").addEventListener("click", () => {
-    const newTitle = document.getElementById("newTitle").value.trim();
-    if (newTitle) {
-      document.title = newTitle;
-      document.getElementById("pageTitle").textContent = newTitle;
-      localStorage.setItem("pageTitle", newTitle);
-    }
-  });
-
-  const themeColorInput = document.getElementById("themeColor");
-  themeColorInput.addEventListener("input", () => {
-    document.documentElement.style.setProperty('--primary-color', themeColorInput.value);
-    const darker = shadeColor(themeColorInput.value, -20);
-    document.documentElement.style.setProperty('--hover-color', darker);
-    localStorage.setItem("themeColor", themeColorInput.value);
-  });
-
-  document.getElementById("addCustomBtn").addEventListener("click", () => {
-    const name = document.getElementById("customName").value.trim();
-    const url = document.getElementById("customUrl").value.trim();
-    if (!name || !url) return alert("Please enter both name and URL");
-    customButtons.push({name, url});
-    localStorage.setItem("customButtons", JSON.stringify(customButtons));
-    loadLinks("customButtonList", customButtons, true);
-    document.getElementById("customName").value = "";
-    document.getElementById("customUrl").value = "";
-  });
-
-  document.getElementById("generateBookmarkBtn").addEventListener("click", () => {
-    const url = document.getElementById("bookmarkUrl").value.trim();
-    const name = document.getElementById("bookmarkName").value.trim();
-    if (!url || !name) return alert("Please enter both URL and name");
-    const bookmarkLink = document.getElementById("bookmarkLink");
-    bookmarkLink.href = url;
-    bookmarkLink.textContent = name;
-    document.getElementById("bookmarkContainer").style.display = "block";
-  });
-
-  document.getElementById("downloadBookmarkBtn").addEventListener("click", () => {
-    const url = document.getElementById("bookmarkUrl").value.trim();
-    const name = document.getElementById("bookmarkName").value.trim();
-    if (!url || !name) return alert("Please enter both URL and name");
-    const content = `<a href="${url}" target="_blank">${name}</a>`;
-    const blob = new Blob([content], {type: "text/html"});
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = `${name.replace(/\s+/g, "_")}_bookmark.html`;
-    link.click();
-    URL.revokeObjectURL(link.href);
-  });
-
-  const savedTitle = localStorage.getItem("pageTitle");
-  if (savedTitle) {
-    document.title = savedTitle;
-    document.getElementById("pageTitle").textContent = savedTitle;
-    document.getElementById("newTitle").value = savedTitle;
-  }
-
-  const savedThemeColor = localStorage.getItem("themeColor");
-  if (savedThemeColor) {
-    themeColorInput.value = savedThemeColor;
-    document.documentElement.style.setProperty('--primary-color', savedThemeColor);
-    const darker = shadeColor(savedThemeColor, -20);
-    document.documentElement.style.setProperty('--hover-color', darker);
-  }
+document.getElementById("addCustomBtn").addEventListener("click", () => {
+  const name = document.getElementById("customName").value.trim();
+  const url = document.getElementById("customUrl").value.trim();
+  if (!name || !url) return alert("Please enter both name and URL");
+  customButtons.push({name, url});
+  localStorage.setItem("customButtons", JSON.stringify(customButtons));
+  loadLinks("customButtonList", customButtons, true);
+  document.getElementById("customName").value = "";
+  document.getElementById("customUrl").value = "";
 });
+
+document.getElementById("generateBookmarkBtn").addEventListener("click", () => {
+  const url = document.getElementById("bookmarkUrl").value.trim();
+  const name = document.getElementById("bookmarkName").value.trim();
+  if (!url || !name) return alert("Please enter both URL and name");
+  const bookmarkLink = document.getElementById("bookmarkLink");
+  bookmarkLink.href = url;
+  bookmarkLink.textContent = name;
+  document.getElementById("bookmarkContainer").style.display = "block";
+});
+
+document.getElementById("downloadBookmarkBtn").addEventListener("click", () => {
+  const url = document.getElementById("bookmarkUrl").value.trim();
+  const name = document.getElementById("bookmarkName").value.trim();
+  if (!url || !name) return alert("Please enter both URL and name");
+  const content = `<a href="${url}" target="_blank">${name}</a>`;
+  const blob = new Blob([content], {type: "text/html"});
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `${name.replace(/\s+/g, "_")}_bookmark.html`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+});
+
+const savedTitle = localStorage.getItem("pageTitle");
+if (savedTitle) {
+  document.title = savedTitle;
+  document.getElementById("pageTitle").textContent = savedTitle;
+  document.getElementById("newTitle").value = savedTitle;
+}
+
+const savedThemeColor = localStorage.getItem("themeColor");
+if (savedThemeColor) {
+  themeColorInput.value = savedThemeColor;
+  document.documentElement.style.setProperty('--primary-color', savedThemeColor);
+  const darker = shadeColor(savedThemeColor, -20);
+  document.documentElement.style.setProperty('--hover-color', darker);
+}
+
+fetch("data/main.json")
+  .then(res => res.json())
+  .then(data => {
+    loadLinks("proxyList", data.proxies);
+    loadLinks("gameList", data.games);
+    loadLinks("toolList", data.tools);
+    loadLinks("emulatorList", data.emulators);
+    loadLinks("appList", data.apps);
+  });
+
+loadLinks("customButtonList", customButtons, true);
+renderFavorites();
