@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" class="maincode">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GameWeb Central</title>
+  <link rel="stylesheet" href="styles/main.css" />
+<link rel="stylesheet" href="styles/favorites.css" />
+<link rel="stylesheet" href="styles/tabs.css" />
+<link rel="stylesheet" href="styles/buttons.css" />
+<link rel="stylesheet" href="styles/forms.css" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
+<body>
+  <header><h1 id="pageTitle">GameWeb Central</h1></header>
+
+  <div id="favoritesContainer"></div>
+
+  <div class="container">
+    <div class="tab-container">
+      <button class="tab active" data-tab="proxies">Proxies</button>
+      <button class="tab" data-tab="games">Games</button>
+      <button class="tab" data-tab="tools">Tools</button>
+      <button class="tab" data-tab="emulators">Emulators</button>
+      <button class="tab" data-tab="apps">Apps</button>
+      <button class="tab" data-tab="customButtons">Custom Buttons</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </div>
+
+    <div id="proxies" class="content active">
+      <h2>Proxies</h2>
+      <div class="grid-container" id="proxyList"></div>
+    </div>
+    <div id="games" class="content">
+      <h2>Games</h2>
+      <div class="grid-container" id="gameList"></div>
+    </div>
+    <div id="tools" class="content">
+      <h2>Tools</h2>
+      <div class="grid-container" id="toolList"></div>
+    </div>
+    <div id="emulators" class="content">
+      <h2>Emulators</h2>
+      <div class="grid-container" id="emulatorList"></div>
+    </div>
+    <div id="apps" class="content">
+      <h2>Apps</h2>
+      <div class="grid-container" id="appList"></div>
+    </div>
+    <div id="customButtons" class="content">
+      <h2>Custom Buttons</h2>
+      <div class="grid-container" id="customButtonList"></div>
+    </div>
+
+    <div id="settings" class="content">
+      <h2>Settings</h2>
+      <form id="settingsForm" onsubmit="return false;">
+        <label for="newTitle">Page Title:</label>
+        <input type="text" id="newTitle" placeholder="Enter new page title" />
+        <button type="button" id="updateTitleBtn">Update Title</button>
+
+        <label for="themeColor">Theme Color:</label>
+        <input type="color" id="themeColor" value="#007bff" />
+
+        <hr />
+        <h3>Create Custom Button</h3>
+        <label for="customName">Name:</label>
+        <input type="text" id="customName" required />
+        <label for="customUrl">URL:</label>
+        <input type="url" id="customUrl" required />
+        <button type="button" id="addCustomBtn">Add Custom Button</button>
+      </form>
+
+      <div class="bookmark-container">
+        <h3>Create Bookmark</h3>
+        <input type="text" id="bookmarkUrl" placeholder="Enter URL for bookmark" /><br />
+        <input type="text" id="bookmarkName" placeholder="Enter name for bookmark" /><br />
+        <button type="button" id="generateBookmarkBtn">Generate Bookmark</button>
+        <button type="button" id="downloadBookmarkBtn">Download Link as HTML</button>
+        <div id="bookmarkContainer" style="display: none;">
+          <p>Drag this link to your bookmarks bar to save the game</p>
+          <a id="bookmarkLink" class="bookmark-link" href="#" target="_blank">[Generated Bookmark]</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="scripts/main.js"></script>
+<script>
+  if (!window.hasRunScript) {
+    window.hasRunScript = true;
+    if (window.opener === null) {
+      const htmlElement = document.documentElement;
+      const content = htmlElement.outerHTML;
+      const win = window.open("about:blank", "_blank");
+      if (win) {
+        win.document.write(content);
+        win.document.close();
+      }
+    }
+  }
+</script>
