@@ -48,38 +48,58 @@
       <div class="grid-container" id="customButtonList"></div>
     </div>
 
-    <div id="settings" class="content">
-      <h2>Settings</h2>
-      <form id="settingsForm" onsubmit="return false;">
-        <label for="newTitle">Page Title:</label>
-        <input type="text" id="newTitle" placeholder="Enter new page title" />
-        <button type="button" id="updateTitleBtn">Update Title</button>
+   <!-- Settings HTML -->
+<div id="settings" class="content">
+  <h2>Settings</h2>
 
-        <label for="themeColor">Theme Color:</label>
-        <input type="color" id="themeColor" value="#007bff" />
+  <label for="titlePreset">Cloak Presets:</label>
+  <select id="titlePreset">
+    <option value="">-- Select Cloak --</option>
+    <option value="Clever|favicons/clever.ico">Clever</option>
+    <option value="Google Classroom|https://example.com/google-classroom.ico">Classroom</option>
+    <option value="Drive|https://example.com/google-drive.ico">Google Drive</option>
+    <option value="Nced Cloud|https://example.com/nced.ico">Nced</option>
+  </select>
 
-        <hr />
-        <h3>Create Custom Button</h3>
-        <label for="customName">Name:</label>
-        <input type="text" id="customName" required />
-        <label for="customUrl">URL:</label>
-        <input type="url" id="customUrl" required />
-        <button type="button" id="addCustomBtn">Add Custom Button</button>
-      </form>
+  <form id="settingsForm" onsubmit="return false;">
+    <label for="newTitle">Page Title:</label>
+    <input type="text" id="newTitle" placeholder="Enter new page title" />
 
-      <div class="bookmark-container">
-        <h3>Create Bookmark</h3>
-        <input type="text" id="bookmarkUrl" placeholder="Enter URL for bookmark" /><br />
-        <input type="text" id="bookmarkName" placeholder="Enter name for bookmark" /><br />
-        <button type="button" id="generateBookmarkBtn">Generate Bookmark</button>
-        <button type="button" id="downloadBookmarkBtn">Download Link as HTML</button>
-        <div id="bookmarkContainer" style="display: none;">
-          <p>Drag this link to your bookmarks bar to save the game</p>
-          <a id="bookmarkLink" class="bookmark-link" href="#" target="_blank">[Generated Bookmark]</a>
-        </div>
-      </div>
+    <label for="faviconUrl">Favicon URL:</label>
+    <input type="text" id="faviconUrl" placeholder="Enter favicon image URL" />
+    <button type="button" id="updateFaviconBtn">Update Favicon</button>
+
+    <button type="button" id="updateTitleBtn">Update Title</button>
+
+    <label for="themeColor">Theme Color:</label>
+    <input type="color" id="themeColor" value="#007bff" />
+
+    <hr />
+    <h3>Create Custom Button</h3>
+    <label for="customName">Name:</label>
+    <input type="text" id="customName" required />
+    <label for="customUrl">URL:</label>
+    <input type="url" id="customUrl" required />
+    <button type="button" id="addCustomBtn">Add Custom Button</button>
+  </form>
+
+  <div class="bookmark-container">
+    <h3>Create Bookmark</h3>
+    <input type="text" id="bookmarkUrl" placeholder="Enter URL for bookmark" /><br />
+    <input type="text" id="bookmarkName" placeholder="Enter name for bookmark" /><br />
+    <button type="button" id="generateBookmarkBtn">Generate Bookmark</button>
+    <button type="button" id="downloadBookmarkBtn">Download Link as HTML</button>
+    <div id="bookmarkContainer" style="display: none;">
+      <p>Drag this link to your bookmarks bar to save the game</p>
+      <a id="bookmarkLink" class="bookmark-link" href="#" target="_blank">[Generated Bookmark]</a>
     </div>
   </div>
+
+  <h3>Local Storage Import/Export</h3>
+<button id="importLocalStorageBtn">Import Local Storage Key (JSON)</button>
+<button id="exportLocalStorageBtn">Export Custom HTML Key</button>
+</div>
+
 <script src="scripts/main.js"></script>
 <script src="scripts/loadbtns.js"></script>
 <script>
