@@ -226,35 +226,6 @@ fetch("data/main.json")
 loadLinks("customButtonList", customButtons, true);
 renderFavorites();
 
-// Local Storage Import/Export buttons
-
-document.getElementById("importLocalStorageBtn").addEventListener("click", () => {
-  const jsonInput = prompt("Paste JSON for localStorage key:");
-  if (!jsonInput) return;
-  try {
-    const obj = JSON.parse(jsonInput);
-    if (typeof obj !== "object" || obj === null) throw new Error("Invalid JSON");
-    for (const [key, value] of Object.entries(obj)) {
-      localStorage.setItem(key, typeof value === "string" ? value : JSON.stringify(value));
-    }
-    alert("Local storage key(s) imported successfully.");
-    location.reload();
-  } catch {
-    alert("Invalid JSON input.");
-  }
-});
-
-document.getElementById("exportLocalStorageBtn").addEventListener("click", () => {
-  const key = "customHTML";
-  const val = localStorage.getItem(key);
-  if (!val) return alert(`No localStorage key named "${key}" found.`);
-  const exportObj = {};
-  exportObj[key] = val;
-  const jsonStr = JSON.stringify(exportObj, null, 2);
-  prompt("Copy your JSON export:", jsonStr);
-});
-
-// Load customHTML key if present
 const customHTML = localStorage.getItem("customHTML");
 if (customHTML) {
   const container = document.createElement("div");
@@ -262,27 +233,4 @@ if (customHTML) {
   document.body.appendChild(container);
 }
 
-// Limit to single tab open using localStorage
-const TAB_KEY = "openTabTimestamp";
-function updateTabTimestamp() {
-  localStorage.setItem(TAB_KEY, Date.now().toString());
-}
-function checkSingleTab() {
-  const lastTimestamp = localStorage.getItem(TAB_KEY);
-  const now = Date.now();
-  if (lastTimestamp && now - Number(lastTimestamp) < 3000) {
-    alert("Another tab is already open. Please use only one tab of this site.");
-  } else {
-    updateTabTimestamp();
-  }
-}
-window.addEventListener("storage", e => {
-  if (e.key === TAB_KEY) {
-    const lastTimestamp = e.newValue;
-    const now = Date.now();
-    if (now - Number(lastTimestamp) < 3000) {
-      alert("Another tab opened the site. Please close extra tabs.");
-    }
-  }
-});
 setInterval(updateTabTimestamp, 2000);
