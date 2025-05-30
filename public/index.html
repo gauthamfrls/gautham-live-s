@@ -1,21 +1,128 @@
 <!DOCTYPE html>
-<html lang="en" class="maincode">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GameWeb Central</title>
+  <title>Gautham's Hub</title>
   <link rel="stylesheet" href="styles/main.css" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <style>
+    :root {
+      --primary-color: #a64aff;
+      --secondary-color: #b266ff;
+      --bg-color: #0f0f1f;
+      --text-color: #f4f4f4;
+      --card-bg: #1e1e30;
+      --accent: #d580ff;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      padding: 2rem 1rem;
+      text-align: center;
+      box-shadow: 0 0 20px var(--primary-color);
+    }
+    #pageTitle {
+      margin: 0;
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    a {
+      color: var(--accent);
+      text-align: center;
+      display: block;
+      margin: 1.5rem auto;
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: var(--text-color);
+    }
+    .container {
+      padding: 2rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .tab-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 2rem;
+    }
+    .tab {
+      background: var(--card-bg);
+      color: var(--text-color);
+      border: 1px solid var(--primary-color);
+      padding: 0.8rem 1.5rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .tab.active, .tab:hover {
+      background: var(--primary-color);
+      color: #fff;
+      transform: scale(1.05);
+    }
+    .content {
+      display: none;
+    }
+    .content.active {
+      display: block;
+    }
+    h2 {
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+      font-size: 1.75rem;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    input, select, button {
+      margin-top: 0.5rem;
+      display: block;
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 10px;
+      border: none;
+      background: #2b2b45;
+      color: #fff;
+      font-size: 1rem;
+    }
+    button:hover {
+      background: var(--accent);
+    }
+    .bookmark-container, form {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: 12px;
+      margin-top: 2rem;
+      box-shadow: 0 0 10px rgba(255,255,255,0.05);
+    }
+  </style>
 </head>
 <body>
-  <header><h1 id="pageTitle">GameWeb Central</h1></header><br>
-   <a href="https://gamewebv3.vercel.app" target="_blank" style="text-align: center; display: block; margin-bottom: 20px;">Click Here to Try GamewebV3</a>
-   <div id="favoritesContainer"></div>
+  <header><h1 id="pageTitle">Gautham's Hub</h1></header>
+
 
   <div class="container">
     <div class="tab-container">
-      <button class="tab active" data-tab="proxies">Proxies</button>
-      <button class="tab" data-tab="games">Games</button>
+      <button class="tab active" data-tab="games">Games</button>
       <button class="tab" data-tab="tools">Tools</button>
       <button class="tab" data-tab="emulators">Emulators</button>
       <button class="tab" data-tab="apps">Apps</button>
@@ -23,11 +130,7 @@
       <button class="tab" data-tab="settings">Settings</button>
     </div>
 
-    <div id="proxies" class="content active">
-      <h2>Proxies</h2>
-      <div class="grid-container" id="proxyList"></div>
-    </div>
-    <div id="games" class="content">
+    <div id="games" class="content active">
       <h2>Games</h2>
       <div class="grid-container" id="gameList"></div>
     </div>
@@ -48,66 +151,53 @@
       <div class="grid-container" id="customButtonList"></div>
     </div>
 
-<div id="settings" class="content">
-  <h2>Settings</h2>
+    <div id="settings" class="content">
+      <h2>Settings</h2>
+      <label for="titlePreset">Cloak Presets:</label>
+      <select id="titlePreset">
+        <option value="">-- Select Cloak --</option>
+        <option value="Clever|favicons/clever.ico">Clever</option>
+        <option value="Google Classroom|https://example.com/google-classroom.ico">Classroom</option>
+        <option value="Drive|https://example.com/google-drive.ico">Google Drive</option>
+        <option value="Nced Cloud|https://example.com/nced.ico">Nced</option>
+      </select>
 
-  <label for="titlePreset">Cloak Presets:</label>
-  <select id="titlePreset">
-    <option value="">-- Select Cloak --</option>
-    <option value="Clever|favicons/clever.ico">Clever</option>
-    <option value="Google Classroom|https://example.com/google-classroom.ico">Classroom</option>
-    <option value="Drive|https://example.com/google-drive.ico">Google Drive</option>
-    <option value="Nced Cloud|https://example.com/nced.ico">Nced</option>
-  </select>
+      <form id="settingsForm" onsubmit="return false;">
+        <label for="newTitle">Page Title:</label>
+        <input type="text" id="newTitle" placeholder="Enter new page title" />
 
-  <form id="settingsForm" onsubmit="return false;">
-    <label for="newTitle">Page Title:</label>
-    <input type="text" id="newTitle" placeholder="Enter new page title" />
+        <label for="faviconUrl">Favicon URL:</label>
+        <input type="text" id="faviconUrl" placeholder="Enter favicon image URL" />
+        <button type="button" id="updateFaviconBtn">Update Favicon</button>
+        <button type="button" id="updateTitleBtn">Update Title</button>
 
-    <label for="faviconUrl">Favicon URL:</label>
-    <input type="text" id="faviconUrl" placeholder="Enter favicon image URL" />
-    <button type="button" id="updateFaviconBtn">Update Favicon</button>
+        <label for="themeColor">Theme Color:</label>
+        <input type="color" id="themeColor" value="#7f00ff" />
 
-    <button type="button" id="updateTitleBtn">Update Title</button>
+        <hr />
+        <h3>Create Custom Button</h3>
+        <label for="customName">Name:</label>
+        <input type="text" id="customName" required />
+        <label for="customUrl">URL:</label>
+        <input type="url" id="customUrl" required />
+        <button type="button" id="addCustomBtn">Add Custom Button</button>
+      </form>
 
-    <label for="themeColor">Theme Color:</label>
-    <input type="color" id="themeColor" value="#007bff" />
-
-    <hr />
-    <h3>Create Custom Button</h3>
-    <label for="customName">Name:</label>
-    <input type="text" id="customName" required />
-    <label for="customUrl">URL:</label>
-    <input type="url" id="customUrl" required />
-    <button type="button" id="addCustomBtn">Add Custom Button</button>
-  </form>
-
-  <div class="bookmark-container">
-    <h3>Create Bookmark</h3>
-    <input type="text" id="bookmarkUrl" placeholder="Enter URL for bookmark" /><br />
-    <input type="text" id="bookmarkName" placeholder="Enter name for bookmark" /><br />
-    <button type="button" id="generateBookmarkBtn">Generate Bookmark</button>
-    <button type="button" id="downloadBookmarkBtn">Download Link as HTML</button>
-    <div id="bookmarkContainer" style="display: none;">
-      <p>Drag this link to your bookmarks bar to save the game</p>
-      <a id="bookmarkLink" class="bookmark-link" href="#" target="_blank">[Generated Bookmark]</a>
+      <div class="bookmark-container">
+        <h3>Create Bookmark</h3>
+        <input type="text" id="bookmarkUrl" placeholder="Enter URL for bookmark" />
+        <input type="text" id="bookmarkName" placeholder="Enter name for bookmark" />
+        <button type="button" id="generateBookmarkBtn">Generate Bookmark</button>
+        <button type="button" id="downloadBookmarkBtn">Download Link as HTML</button>
+        <div id="bookmarkContainer" style="display: none;">
+          <p>Drag this link to your bookmarks bar to save the game</p>
+          <a id="bookmarkLink" class="bookmark-link" href="#" target="_blank">[Generated Bookmark]</a>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<script src="scripts/main.js"></script>
-<script src="scripts/loadbtns.js"></script>
-<script>
-  if (!window.hasRunScript) {
-    window.hasRunScript = true;
-    if (window.opener === null) {
-      const htmlElement = document.documentElement;
-      const content = htmlElement.outerHTML;
-      const win = window.open("about:blank", "_blank");
-      if (win) {
-        win.document.write(content);
-        win.document.close();
-      }
-    }
-  }
-</script>
+  <script src="scripts/main.js"></script>
+  <script src="scripts/loadbtns.js"></script>
+</body>
+</html>
